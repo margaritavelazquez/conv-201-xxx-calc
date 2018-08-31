@@ -89,7 +89,11 @@ function updateMessage(input, response) {
   if (!response.output) {
     response.output = {};
   } else {
-    return response;
+    if (response.intents.length > 0 &&) ( response.intents[0].intent === 'add' ||
+        response.intents[0].intent === 'multiply')) {
+        reponse = getCalculationResult(response);
+    }
+    //return response;
   }
   if (response.intents && response.intents[0]) {
     var intent = response.intents[0];
@@ -108,6 +112,31 @@ function updateMessage(input, response) {
   }
   response.output.text = responseText;
   return response;
+}
+
+
+/**Get the operands**/
+
+fuction getCalculationResult(response){
+  var numbersArr = [];
+  for(var i = 0; i< response.entities.length; i++)[
+    if (response.entities[i].entity === 'sys-number') {
+      numbersArr.push(response.entities[i].value);
+    }}
+  
+  var result = 0;
+   if (response.entities[0].intent === 'add') {
+      result = parseInt(numbersArr[0]) + parseInt(numbersArr[1]);
+    } else if (response.entities[0].intent === 'multiply') {
+            result = parseInt(numbersArr[0]) * parseInt(numbersArr[1]);
+    }
+
+  var output = response.output.text[0];
+  output = output.replace('_result_', result);
+  response.output.text[0] = output;
+  
+  return response;
+     
 }
 
 module.exports = app;
