@@ -4,7 +4,7 @@ declared-services:
  label: conversation
  plan: free
 applications:
-- name: conv-201-201-calc
+- name: conv-201-xxx-calc
   command: npm start
   path: .
   memory: 512M
