@@ -89,7 +89,7 @@ function updateMessage(input, response) {
   if (!response.output) {
     response.output = {};
   } else {
-    if (response.intents.length > 0 &&) ( response.intents[0].intent === 'add' ||
+    if (response.intents.length > 0 && (response.intents[0].intent === 'add' ||
         response.intents[0].intent === 'multiply')) {
         reponse = getCalculationResult(response);
     }
@@ -117,12 +117,13 @@ function updateMessage(input, response) {
 
 /**Get the operands**/
 
-fuction getCalculationResult(response){
+function getCalculationResult(response){
   var numbersArr = [];
-  for(var i = 0; i< response.entities.length; i++)[
+  for(var i = 0; i< response.entities.length; i++){
     if (response.entities[i].entity === 'sys-number') {
       numbersArr.push(response.entities[i].value);
-    }}
+    }
+    }
   
   var result = 0;
    if (response.entities[0].intent === 'add') {
